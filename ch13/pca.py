@@ -12,8 +12,8 @@ def pca(dataMat,topNfeat=9999999): #topNfeat为可选参数，记录特征值个
     meanVals=mean(dataMat,axis=0) #求均值
     meanRemoved=dataMat-meanVals  #归一化数据
     covMat=cov(meanRemoved,rowvar=0)    #求协方差
-    eigVals,eigVects=linalg.eig(mat(covMat)) #计算特征值和特征向量
-    eigValInd=argsort(eigVals)               #对特征值进行排序，默认从小到大
+    eigVals,eigVects=linalg.eigh(mat(covMat)) 
+    #计算特征值和特征向量, eigh() is better for symmatrix matrix and output sorted eigenvalues with orthnormal eigenvectors
     eigValInd=eigValInd[:-(topNfeat+1):-1]   #逆序取得特征值最大的元素
     redEigVects=eigVects[:,eigValInd]        #用特征向量构成矩阵
     lowDDataMat=meanRemoved*redEigVects      #用归一化后的各个数据与特征矩阵相乘，映射到新的空间
